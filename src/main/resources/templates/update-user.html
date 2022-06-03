@@ -1,5 +1,5 @@
 <form action="#"
-      th:action="@{/update/{id}(id=${user.id})}"
+      th:action="@{/admin/update/{id}(id=${user.id})}"
       th:object="${user}"
       method="post">
     <label for="name">Name</label>
@@ -13,3 +13,7 @@
     <span th:if="${#fields.hasErrors('address')}" th:errors="*{address}"></span>
     <input type="submit" value="Update User">
 </form>
+
+<a href="#" th:href="@{/admin}">page of the current user</a>
+<br>
+<a href="#" th:href="@{/logout}">log out</a>

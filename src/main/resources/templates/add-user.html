@@ -1,4 +1,4 @@
-<form action="#" th:action="@{/adduser}" th:object="${user}" method="post">
+<form action="#" th:action="@{/admin/adduser}" th:object="${user}" method="post">
     <label for="name">Name</label>
     <input type="text" th:field="*{name}" id="name" placeholder="Name">
     <span th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></span>
@@ -10,3 +10,7 @@
     <span th:if="${#fields.hasErrors('address')}" th:errors="*{address}"></span>
     <input type="submit" value="Add User">
 </form>
+
+<a href="#" th:href="@{/admin}">page of the current user</a>
+<br>
+<a href="#" th:href="@{/logout}">log Out</a>
