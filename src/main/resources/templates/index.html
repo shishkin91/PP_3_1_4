@@ -1,31 +1,31 @@
-<div th:switch="${myUsers}">
-    <h2 th:case="null">No myUsers yet!</h2>
-    <div th:case="*">
-        <h2>Users</h2>
-        <table>
-            <thead>
-            <tr>
-                <th>Name</th>
-                <th>Email</th>
-                <th>Address</th>
-                <th>Edit</th>
-                <th>Delete</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr th:each="myUser : ${myUsers}">
-                <td th:text="${myUser.name}"></td>
-                <td th:text="${myUser.email}"></td>
-                <td th:text="${myUser.address}"></td>
-                <td><a th:href="@{/admin/edit/{id}(id=${myUser.id})}">Edit</a></td>
-                <td><a th:href="@{/admin/delete/{id}(id=${myUser.id})}">Delete</a></td>
-            </tr>
-            </tbody>
-        </table>
-    </div>
-    <p><a href="/admin/add-user">Add a new myUser</a></p>
-</div>
+<!--<div th:switch="${myUsers}">-->
+<!--    <h2 th:case="null">No myUsers yet!</h2>-->
+<!--    <div th:case="*">-->
+<!--        <h2>Users</h2>-->
+<!--        <table>-->
+<!--            <thead>-->
+<!--            <tr>-->
+<!--                <th>Name</th>-->
+<!--                <th>Email</th>-->
+<!--                <th>Address</th>-->
+<!--                <th>Edit</th>-->
+<!--                <th>Delete</th>-->
+<!--            </tr>-->
+<!--            </thead>-->
+<!--            <tbody>-->
+<!--            <tr th:each="myUser : ${myUsers}">-->
+<!--                <td th:text="${myUser.name}"></td>-->
+<!--                <td th:text="${myUser.email}"></td>-->
+<!--                <td th:text="${myUser.address}"></td>-->
+<!--                <td><a th:href="@{/admin/edit/{id}(id=${myUser.id})}">Edit</a></td>-->
+<!--                <td><a th:href="@{/admin/delete/{id}(id=${myUser.id})}">Delete</a></td>-->
+<!--            </tr>-->
+<!--            </tbody>-->
+<!--        </table>-->
+<!--    </div>-->
+<!--    <p><a href="/admin/add-user">Add a new myUser</a></p>-->
+<!--</div>-->
 
-<a href="#" th:href="@{/admin}">page of the current myUser</a>
-<br>
-<a href="#" th:href="@{/logout}">log Out</a>
+<!--<a href="#" th:href="@{/admin}">page of the current myUser</a>-->
+<!--<br>-->
+<!--<a href="#" th:href="@{/logout}">log Out</a>-->

@@ -32,12 +32,12 @@ public class UsersController {
         }
 
         userServiceImp.saveUser(myUser);
-        return "redirect:/admin/all-users";
+        return "redirect:/admin";
     }
-    @GetMapping("/admin/all-users")
+    @GetMapping("/admin")
     public String showUserList(Model model) {
         model.addAttribute("myUsers", userServiceImp.findAll());
-        return "index";
+        return "admin";
     }
     @GetMapping("admin/edit/{id}")
     public String showUpdateForm(@PathVariable("id") long id, Model model) {
@@ -60,7 +60,7 @@ public class UsersController {
         }
 
         userServiceImp.saveUser(myUser);
-        return "redirect:/admin/all-users";
+        return "redirect:/admin";
     }
 
     @GetMapping("/admin/delete/{id}")
@@ -72,14 +72,14 @@ public class UsersController {
             System.out.println("Invalid myUser Id:" + id);
         }
         userServiceImp.deleteById(myUser.getId());
-        return "redirect:/admin/all-users";
+        return "redirect:/admin";
     }
 
-    @GetMapping(value = "/admin")
-    public String adminPage(ModelMap modelMap, Principal principal) {
-        modelMap.addAttribute("myUser", userServiceImp.findByUsername(principal.getName()));
-        return "admin";
-    }
+//    @GetMapping(value = "/admin")
+//    public String adminPage(ModelMap modelMap, Principal principal) {
+//        modelMap.addAttribute("myUser", userServiceImp.findByUsername(principal.getName()));
+//        return "admin";
+//    }
 
     @GetMapping(value = "/user")
     public String userPage(ModelMap modelMap, Principal principal) {

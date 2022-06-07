@@ -1,29 +1,33 @@
-<!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
-<head>
-    <title>Spring Security Example</title>
-</head>
-<body>
-<h1>page of the current myUser</h1>
-<div>
-    <table>
-        <thead>
-        <tr>
-            <th>address</th>
-            <th>email</th>
-            <th>username</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr>
-            <td th:text="${myUser.getAddress()}">address</td>
-            <td th:text="${myUser.getEmail()}">email</td>
-            <td th:text="${myUser.getUsername()}">username</td>
-        </tr>
-        </tbody>
-    </table>
-</div>
 
-<a href="#" th:href="@{/logout}">log out</a>
+<div th:switch="${myUsers}">
+    <h2 th:case="null">No myUsers yet!</h2>
+    <div th:case="*">
+        <h2>Users</h2>
+        <table>
+            <thead>
+            <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Address</th>
+                <th>Edit</th>
+                <th>Delete</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="myUser : ${myUsers}">
+                <td th:text="${myUser.name}"></td>
+                <td th:text="${myUser.email}"></td>
+                <td th:text="${myUser.address}"></td>
+                <td><a th:href="@{/admin/edit/{id}(id=${myUser.id})}">Edit</a></td>
+                <td><a th:href="@{/admin/delete/{id}(id=${myUser.id})}">Delete</a></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <p><a href="/admin/add-user">Add a new myUser</a></p>
+</div>
+<br>
+<a href="#" th:href="@{/logout}">log Out</a>
+
 </body>
 </html>
