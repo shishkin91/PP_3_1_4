@@ -9,7 +9,7 @@ import java.util.Set;
 
 @Entity
 @Table(name = "users")
-public class User implements UserDetails {
+public class MyUser implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
@@ -24,7 +24,7 @@ public class User implements UserDetails {
     @ManyToMany(fetch = FetchType.EAGER)
     private Set<Role> roles;
 
-    public User(Long id, String name, String email, String address, Set<Role> roles) {
+    public MyUser(Long id, String name, String email, String address, Set<Role> roles) {
         this.id = id;
         this.name = name;
         this.email = email;
@@ -32,7 +32,7 @@ public class User implements UserDetails {
         this.roles = roles;
     }
 
-    public User() {
+    public MyUser() {
 
     }
 
@@ -120,7 +120,7 @@ public class User implements UserDetails {
 
     @Override
     public String toString() {
-        return "User{" +
+        return "MyUser{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", email='" + email + '\'' +

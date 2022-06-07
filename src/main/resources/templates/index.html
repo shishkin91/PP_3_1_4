@@ -1,5 +1,5 @@
-<div th:switch="${users}">
-    <h2 th:case="null">No users yet!</h2>
+<div th:switch="${myUsers}">
+    <h2 th:case="null">No myUsers yet!</h2>
     <div th:case="*">
         <h2>Users</h2>
         <table>
@@ -13,19 +13,19 @@
             </tr>
             </thead>
             <tbody>
-            <tr th:each="user : ${users}">
-                <td th:text="${user.name}"></td>
-                <td th:text="${user.email}"></td>
-                <td th:text="${user.address}"></td>
-                <td><a th:href="@{/admin/edit/{id}(id=${user.id})}">Edit</a></td>
-                <td><a th:href="@{/admin/delete/{id}(id=${user.id})}">Delete</a></td>
+            <tr th:each="myUser : ${myUsers}">
+                <td th:text="${myUser.name}"></td>
+                <td th:text="${myUser.email}"></td>
+                <td th:text="${myUser.address}"></td>
+                <td><a th:href="@{/admin/edit/{id}(id=${myUser.id})}">Edit</a></td>
+                <td><a th:href="@{/admin/delete/{id}(id=${myUser.id})}">Delete</a></td>
             </tr>
             </tbody>
         </table>
     </div>
-    <p><a href="/admin/adduser">Add a new user</a></p>
+    <p><a href="/admin/add-user">Add a new myUser</a></p>
 </div>
 
-<a href="#" th:href="@{/admin}">page of the current user</a>
+<a href="#" th:href="@{/admin}">page of the current myUser</a>
 <br>
 <a href="#" th:href="@{/logout}">log Out</a>
