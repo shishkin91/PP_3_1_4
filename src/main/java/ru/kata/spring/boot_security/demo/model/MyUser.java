@@ -131,4 +131,8 @@ public class MyUser implements UserDetails {
                 ", roles=" + roles +
                 '}';
     }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
 }
