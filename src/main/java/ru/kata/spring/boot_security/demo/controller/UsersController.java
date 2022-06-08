@@ -36,7 +36,7 @@ public class UsersController {
     }
     @GetMapping("/admin")
     public String showUserList(Model model) {
-        model.addAttribute("myUsers", userServiceImp.findAll());
+        model.addAttribute("myUsers", userServiceImp.allUsers());
         return "admin";
     }
     @GetMapping("admin/edit/{id}")

@@ -7,8 +7,8 @@ import java.util.List;
 public interface UserService {
 
     MyUser findUserById(Long userId);
-    List<MyUser> findAll();
-    MyUser saveUser(MyUser myUser);
+    List<MyUser> allUsers();
+    boolean saveUser(MyUser myUser);
     void deleteById(Long id);
 
 //    ////////////////////////////////////////////////////////////

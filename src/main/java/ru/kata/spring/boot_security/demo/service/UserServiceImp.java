@@ -22,12 +22,12 @@ public class UserServiceImp implements UserService {
     public MyUser findUserById(Long userId){//+
         return dao.findUserById(userId);
     }
-    public List<MyUser> findAll() {
-        return (List<MyUser>) userRepository.findAll();
+    public List<MyUser> allUsers() {//+
+        return dao.allUsers();
     }
     @Transactional
-    public MyUser saveUser(MyUser myUser) {
-        return userRepository.save(myUser);
+    public boolean saveUser(MyUser myUser) {//+
+        return dao.saveUser(myUser);
     }
     @Transactional
     public void deleteById(Long id) {
