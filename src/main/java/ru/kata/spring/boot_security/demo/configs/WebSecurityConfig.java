@@ -1,5 +1,6 @@
 package ru.kata.spring.boot_security.demo.configs;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Lazy;
@@ -55,7 +56,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
 //    /////////////////////////////////////
 
-    CustomUserDetailsService customUserDetailsService;
+    public final CustomUserDetailsService customUserDetailsService;
     public final SuccessUserHandler successUserHandler;
 
     public WebSecurityConfig(@Lazy CustomUserDetailsService customUserDetailsService, SuccessUserHandler successUserHandler) {

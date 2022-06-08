@@ -70,7 +70,7 @@ public class CustomUserDetailsService implements UserDetailsService
             return false;
         }
 
-        myUser.setRoles(Collections.singleton(new Role(1L, "ROLE_USER")));
+        myUser.setRoles(Collections.singleton(new Role(2L, "ROLE_USER")));
         myUser.setPassword(bCryptPasswordEncoder.encode(myUser.getPassword()));
         userRepository.save(myUser);
         return true;

@@ -40,12 +40,12 @@ public class UsersController {
         return "admin";
     }
     @GetMapping("admin/edit/{id}")
-    public String showUpdateForm(@PathVariable("id") long id, Model model) {
+    public String showUpdateForm(@PathVariable("id") long userId, Model model) {
         MyUser myUser = null;
         try {
-            myUser = userServiceImp.findById(id);
+            myUser = userServiceImp.findUserById(userId);
         } catch (IllegalArgumentException e) {
-            System.out.println("Invalid myUser Id:" + id);
+            System.out.println("Invalid myUser Id:" + userId);
         }
 
         model.addAttribute("myUser", myUser);
@@ -64,12 +64,12 @@ public class UsersController {
     }
 
     @GetMapping("/admin/delete/{id}")
-    public String deleteUser(@PathVariable("id") long id, Model model) {
+    public String deleteUser(@PathVariable("id") long userId, Model model) {
         MyUser myUser = null;
         try {
-            myUser = userServiceImp.findById(id);
+            myUser = userServiceImp.findUserById(userId);
         } catch (IllegalArgumentException e) {
-            System.out.println("Invalid myUser Id:" + id);
+            System.out.println("Invalid myUser Id:" + userId);
         }
         userServiceImp.deleteById(myUser.getId());
         return "redirect:/admin";
