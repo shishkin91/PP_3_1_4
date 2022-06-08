@@ -8,7 +8,8 @@ public interface UserService {
 
     MyUser findUserById(Long userId);
     List<MyUser> allUsers();
-    boolean saveUser(MyUser myUser);
+//    boolean saveUser(MyUser myUser);
+    MyUser saveUser(MyUser myUser);
     void deleteById(Long id);
 
 //    ////////////////////////////////////////////////////////////

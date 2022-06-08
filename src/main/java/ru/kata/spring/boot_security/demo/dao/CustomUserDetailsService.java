@@ -63,17 +63,23 @@ public class CustomUserDetailsService implements UserDetailsService
         return userRepository.findAll();
     }
 
-    public boolean saveUser(MyUser myUser) {
-        MyUser userFromDB = userRepository.findByUsername(myUser.getUsername());
+//    public boolean saveUser(MyUser myUser) {
+//        MyUser userFromDB = userRepository.findByUsername(myUser.getUsername());
+//
+//        if (userFromDB != null) {
+//            return false;
+//        }
+//        myUser.setRoles(Collections.singleton(new Role(2L, "ROLE_USER")));
+//        myUser.setPassword(bCryptPasswordEncoder.encode(myUser.getPassword()));
+//        userRepository.save(myUser);
+//        return true;
+//    }
 
-        if (userFromDB != null) {
-            return false;
-        }
 
+    public MyUser saveUser(MyUser myUser) {
         myUser.setRoles(Collections.singleton(new Role(2L, "ROLE_USER")));
         myUser.setPassword(bCryptPasswordEncoder.encode(myUser.getPassword()));
-        userRepository.save(myUser);
-        return true;
+        return userRepository.save(myUser);
     }
 
     public boolean deleteUser(Long userId) {

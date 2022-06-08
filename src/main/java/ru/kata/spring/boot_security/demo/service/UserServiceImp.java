@@ -25,10 +25,15 @@ public class UserServiceImp implements UserService {
     public List<MyUser> allUsers() {//+
         return dao.allUsers();
     }
-    @Transactional
-    public boolean saveUser(MyUser myUser) {//+
+//    @Transactional
+//    public boolean saveUser(MyUser myUser) {//+
+//        return dao.saveUser(myUser);
+//    }
+
+    public MyUser saveUser(MyUser myUser){
         return dao.saveUser(myUser);
     }
+
     @Transactional
     public void deleteById(Long id) {
         userRepository.deleteById(id);
