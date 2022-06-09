@@ -5,6 +5,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import java.util.Collection;
+import java.util.Objects;
 import java.util.Set;
 
 @Entity
@@ -60,6 +61,10 @@ public class MyUser implements UserDetails {
         this.email = email;
     }
 
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
     public String getAddress() {
         return address;
     }
@@ -110,6 +115,7 @@ public class MyUser implements UserDetails {
     public boolean isEnabled() {
         return true;
     }
+
     public Set<Role> getRoles() {
         return roles;
     }
@@ -127,12 +133,27 @@ public class MyUser implements UserDetails {
                 ", address='" + address + '\'' +
                 ", username='" + username + '\'' +
                 ", password='" + password + '\'' +
-                ", passwordConfirm='" + passwordConfirm + '\'' +
                 ", roles=" + roles +
                 '}';
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        MyUser myUser = (MyUser) o;
+        return id.equals(myUser.id)
+                && Objects.equals(name, myUser.name)
+                && Objects.equals(email, myUser.email)
+                && Objects.equals(address, myUser.address)
+                && Objects.equals(username, myUser.username)
+                && Objects.equals(password, myUser.password)
+                && Objects.equals(passwordConfirm, myUser.passwordConfirm)
+                && Objects.equals(roles, myUser.roles);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, email, address, username, password, passwordConfirm, roles);
     }
 }

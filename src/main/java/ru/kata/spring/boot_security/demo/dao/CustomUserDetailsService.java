@@ -23,8 +23,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
 @Service
-public class CustomUserDetailsService implements UserDetailsService
-{
+public class CustomUserDetailsService implements UserDetailsService {
     @PersistenceContext
     private EntityManager em;
     final
@@ -33,12 +32,13 @@ public class CustomUserDetailsService implements UserDetailsService
     RoleRepository roleRepository;
 
     BCryptPasswordEncoder bCryptPasswordEncoder;
+
     @Autowired
     public void setBCryptPasswordEncoder(BCryptPasswordEncoder bCryptPasswordEncoder) {
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
     }
 
-    public CustomUserDetailsService(UserRepository userRepository,RoleRepository roleRepository) {
+    public CustomUserDetailsService(UserRepository userRepository, RoleRepository roleRepository) {
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
     }
@@ -90,41 +90,9 @@ public class CustomUserDetailsService implements UserDetailsService
         return false;
     }
 
-    public List<MyUser> usergtList(Long idMin) {
-        return em.createQuery("SELECT u FROM users u WHERE u.id > :paramId", MyUser.class)
-                .setParameter("paramId", idMin).getResultList();
+    public MyUser findByUsername(String username) {
+        return userRepository.findByUsername(username);
     }
-//    ///////////////////////////////
-//    public final PasswordEncoder passwordEncoder;
-//
-//    public CustomUserDetailsService(@Lazy PasswordEncoder passwordEncoder) {
-//        this.passwordEncoder = passwordEncoder;
-//    }
-//
-//    @Override
-//    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException
-//    {
-//        List<UserDetails> userDetailsList = populateUserDetails();
-//
-//        for (UserDetails u : userDetailsList)
-//        {
-//            if (u.getUsername().equals(username))
-//            {
-//                return u;
-//            }
-//        }
-//        return null;
-//    }
-//
-//    public List<UserDetails> populateUserDetails()
-//    {
-//        List<UserDetails> userDetailsList = new ArrayList<>();
-//        userDetailsList
-//                .add(User.withUsername("user").password(passwordEncoder.encode("user")).roles("USER").build());
-//        userDetailsList
-//                .add(User.withUsername("admin").password(passwordEncoder.encode("admin")).roles("ADMIN").build());
-//
-//        return userDetailsList;
-//    }
+
 
 }

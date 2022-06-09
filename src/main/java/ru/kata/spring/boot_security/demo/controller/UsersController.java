@@ -20,6 +20,7 @@ public class UsersController {
     public UsersController(UserServiceImp userServiceImp) {
         this.userServiceImp = userServiceImp;
     }
+
     @GetMapping("/admin/add-user")
     public String showSignUpForm(MyUser myUser) {
         return "add-user";
@@ -34,11 +35,13 @@ public class UsersController {
         userServiceImp.saveUser(myUser);
         return "redirect:/admin";
     }
+
     @GetMapping("/admin")
     public String showUserList(Model model) {
         model.addAttribute("myUsers", userServiceImp.allUsers());
         return "admin";
     }
+
     @GetMapping("admin/edit/{id}")
     public String showUpdateForm(@PathVariable("id") long userId, Model model) {
         MyUser myUser = null;
@@ -51,6 +54,7 @@ public class UsersController {
         model.addAttribute("myUser", myUser);
         return "update-user";
     }
+
     @PostMapping("/admin/update/{id}")
     public String updateUser(@PathVariable("id") long id, @Validated MyUser myUser,
                              BindingResult result, Model model) {
@@ -71,15 +75,9 @@ public class UsersController {
         } catch (IllegalArgumentException e) {
             System.out.println("Invalid myUser Id:" + userId);
         }
-        userServiceImp.deleteById(myUser.getId());
+        userServiceImp.deleteUser(myUser.getId());
         return "redirect:/admin";
     }
-
-//    @GetMapping(value = "/admin")
-//    public String adminPage(ModelMap modelMap, Principal principal) {
-//        modelMap.addAttribute("myUser", userServiceImp.findByUsername(principal.getName()));
-//        return "admin";
-//    }
 
     @GetMapping(value = "/user")
     public String userPage(ModelMap modelMap, Principal principal) {

@@ -11,6 +11,9 @@
     <label for="address">Address</label>
     <input type="text" th:field="*{address}" id="address" placeholder="Address">
     <span th:if="${#fields.hasErrors('address')}" th:errors="*{address}"></span>
+    <label for="password">Password</label>
+    <input type="text" th:field="*{password}" id="password" placeholder="Password">
+    <span th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></span>
     <input type="submit" value="Update User">
 </form>
 
