@@ -1,35 +1,24 @@
 package ru.kata.spring.boot_security.demo.dao;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Lazy;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import ru.kata.spring.boot_security.demo.model.MyUser;
 import ru.kata.spring.boot_security.demo.model.Role;
 import ru.kata.spring.boot_security.demo.repository.RoleRepository;
 import ru.kata.spring.boot_security.demo.repository.UserRepository;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
+import java.util.Collections;
+import java.util.List;
+import java.util.Optional;
 
 @Service
 public class CustomUserDetailsService implements UserDetailsService {
-    @PersistenceContext
-    private EntityManager em;
-    final
-    UserRepository userRepository;
-    final
-    RoleRepository roleRepository;
+    final UserRepository userRepository;
+    final RoleRepository roleRepository;
 
     BCryptPasswordEncoder bCryptPasswordEncoder;
 
@@ -63,19 +52,6 @@ public class CustomUserDetailsService implements UserDetailsService {
         return userRepository.findAll();
     }
 
-//    public boolean saveUser(MyUser myUser) {
-//        MyUser userFromDB = userRepository.findByUsername(myUser.getUsername());
-//
-//        if (userFromDB != null) {
-//            return false;
-//        }
-//        myUser.setRoles(Collections.singleton(new Role(2L, "ROLE_USER")));
-//        myUser.setPassword(bCryptPasswordEncoder.encode(myUser.getPassword()));
-//        userRepository.save(myUser);
-//        return true;
-//    }
-
-
     public MyUser saveUser(MyUser myUser) {
         myUser.setRoles(Collections.singleton(new Role(2L, "ROLE_USER")));
         myUser.setPassword(bCryptPasswordEncoder.encode(myUser.getPassword()));
@@ -93,6 +69,5 @@ public class CustomUserDetailsService implements UserDetailsService {
     public MyUser findByUsername(String username) {
         return userRepository.findByUsername(username);
     }
-
 
 }
