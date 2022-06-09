@@ -9,8 +9,8 @@
                 <th>Name</th>
                 <th>Email</th>
                 <th>Address</th>
-                <th>Edit</th>
-                <th>Delete</th>
+                <th>Roles</th>
+
             </tr>
             </thead>
             <tbody>
@@ -18,6 +18,7 @@
                 <td th:text="${user.name}"></td>
                 <td th:text="${user.email}"></td>
                 <td th:text="${user.address}"></td>
+                <td th:text="${user.getAuthorities()}"></td>
                 <td><a th:href="@{/admin/edit/{id}(id=${user.id})}">Edit</a></td>
                 <td><a th:href="@{/admin/delete/{id}(id=${user.id})}">Delete</a></td>
             </tr>

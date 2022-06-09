@@ -7,6 +7,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import ru.kata.spring.boot_security.demo.model.Role;
 import ru.kata.spring.boot_security.demo.model.User;
 import ru.kata.spring.boot_security.demo.service.UserServiceImp;
 
@@ -52,6 +53,7 @@ public class AdminUserController {
         }
 
         model.addAttribute("user", user);
+        model.addAttribute("roles", user.getAuthorities());
         return "update-user";
     }
 
