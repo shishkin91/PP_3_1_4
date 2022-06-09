@@ -1,42 +1,77 @@
 package ru.kata.spring.boot_security.demo.service;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import ru.kata.spring.boot_security.demo.dao.CustomUserDetailsService;
-import ru.kata.spring.boot_security.demo.model.MyUser;
+import ru.kata.spring.boot_security.demo.model.User;
+import ru.kata.spring.boot_security.demo.model.Role;
+import ru.kata.spring.boot_security.demo.repository.RoleRepository;
+import ru.kata.spring.boot_security.demo.repository.UserRepository;
 
+import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class UserServiceImp implements UserService {
 
-    private final CustomUserDetailsService dao;
+    final UserRepository userRepository;
+    final RoleRepository roleRepository;
 
-    public UserServiceImp(CustomUserDetailsService dao) {
-        this.dao = dao;
+    BCryptPasswordEncoder bCryptPasswordEncoder;
+
+    @Autowired
+    public void setBCryptPasswordEncoder(BCryptPasswordEncoder bCryptPasswordEncoder) {
+        this.bCryptPasswordEncoder = bCryptPasswordEncoder;
+    }
+
+    public UserServiceImp(UserRepository userRepository, RoleRepository roleRepository) {
+
+        this.userRepository = userRepository;
+        this.roleRepository = roleRepository;
     }
 
     @Transactional
-    public MyUser findUserById(Long userId) {//+
-        return dao.findUserById(userId);
+    public User findUserById(Long userId) {
+        Optional<User> userFromDb = userRepository.findById(userId);
+        return userFromDb.orElse(new User());
     }
 
-    public List<MyUser> allUsers() {//+
-        return dao.allUsers();
+    public List<User> allUsers() {
+        return userRepository.findAll();
     }
 
-    public MyUser saveUser(MyUser myUser) {
-        return dao.saveUser(myUser);
+    public User saveUser(User user) {
+        user.setRoles(Collections.singleton(new Role(2L, "ROLE_USER")));
+        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+        return userRepository.save(user);
     }
 
     @Transactional
     public boolean deleteUser(Long userId) {
-        return dao.deleteUser(userId);
+        if (userRepository.findById(userId).isPresent()) {
+            userRepository.deleteById(userId);
+            return true;
+        }
+        return false;
     }
 
     @Transactional
-    public MyUser findByUsername(String username) {
-        return dao.findByUsername(username);
+    public User findByUsername(String username) {
+        return userRepository.findByUsername(username);
     }
 
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        User user = userRepository.findByUsername(username);
+
+        if (user == null) {
+            throw new UsernameNotFoundException("User not found");
+        }
+
+        return user;
+    }
 }

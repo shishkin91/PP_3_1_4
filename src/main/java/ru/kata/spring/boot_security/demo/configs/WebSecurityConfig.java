@@ -9,23 +9,23 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import ru.kata.spring.boot_security.demo.dao.CustomUserDetailsService;
+import ru.kata.spring.boot_security.demo.service.UserServiceImp;
 
 @Configuration
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
-    public final CustomUserDetailsService customUserDetailsService;
+    public final UserServiceImp userServiceImp;
     public final SuccessUserHandler successUserHandler;
 
-    public WebSecurityConfig(@Lazy CustomUserDetailsService customUserDetailsService, SuccessUserHandler successUserHandler) {
-        this.customUserDetailsService = customUserDetailsService;
+    public WebSecurityConfig(@Lazy UserServiceImp userServiceImp, SuccessUserHandler successUserHandler) {
+        this.userServiceImp = userServiceImp;
         this.successUserHandler = successUserHandler;
     }
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(customUserDetailsService);
+        auth.userDetailsService(userServiceImp);
     }
 
     @Override

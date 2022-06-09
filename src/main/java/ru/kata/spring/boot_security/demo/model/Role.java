@@ -13,7 +13,7 @@ public class Role implements GrantedAuthority {
     private String name;
     @Transient
     @ManyToMany(mappedBy = "roles")
-    private Set<MyUser> myUsers;
+    private Set<User> users;
     public Role() {
     }
 
@@ -42,12 +42,12 @@ public class Role implements GrantedAuthority {
         this.name = name;
     }
 
-    public Set<MyUser> getUsers() {
-        return myUsers;
+    public Set<User> getUsers() {
+        return users;
     }
 
-    public void setUsers(Set<MyUser> myUsers) {
-        this.myUsers = myUsers;
+    public void setUsers(Set<User> users) {
+        this.users = users;
     }
 
     @Override
@@ -60,11 +60,11 @@ public class Role implements GrantedAuthority {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Role role = (Role) o;
-        return id.equals(role.id) && Objects.equals(name, role.name) && Objects.equals(myUsers, role.myUsers);
+        return id.equals(role.id) && Objects.equals(name, role.name) && Objects.equals(users, role.users);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, myUsers);
+        return Objects.hash(id, name, users);
     }
 }

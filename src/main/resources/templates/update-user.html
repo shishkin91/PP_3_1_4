@@ -1,6 +1,6 @@
 <form action="#"
-      th:action="@{/admin/update/{id}(id=${myUser.id})}"
-      th:object="${myUser}"
+      th:action="@{/admin/update/{id}(id=${user.id})}"
+      th:object="${user}"
       method="post">
     <label for="name">Name</label>
     <input type="text" th:field="*{name}" id="name" placeholder="Name">
@@ -17,6 +17,6 @@
     <input type="submit" value="Update User">
 </form>
 
-<a href="#" th:href="@{/admin}">page of the current myUser</a>
+<a href="#" th:href="@{/admin}">page of the current user</a>
 <br>
 <a href="#" th:href="@{/logout}">log out</a>

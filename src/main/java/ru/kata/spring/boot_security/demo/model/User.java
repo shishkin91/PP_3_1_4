@@ -10,7 +10,7 @@ import java.util.Set;
 
 @Entity
 @Table(name = "users")
-public class MyUser implements UserDetails {
+public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
@@ -25,7 +25,7 @@ public class MyUser implements UserDetails {
     @ManyToMany(fetch = FetchType.EAGER)
     private Set<Role> roles;
 
-    public MyUser(Long id, String name, String email, String address, Set<Role> roles) {
+    public User(Long id, String name, String email, String address, Set<Role> roles) {
         this.id = id;
         this.name = name;
         this.email = email;
@@ -33,7 +33,7 @@ public class MyUser implements UserDetails {
         this.roles = roles;
     }
 
-    public MyUser() {
+    public User() {
 
     }
 
@@ -126,7 +126,7 @@ public class MyUser implements UserDetails {
 
     @Override
     public String toString() {
-        return "MyUser{" +
+        return "User{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", email='" + email + '\'' +
@@ -141,15 +141,15 @@ public class MyUser implements UserDetails {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        MyUser myUser = (MyUser) o;
-        return id.equals(myUser.id)
-                && Objects.equals(name, myUser.name)
-                && Objects.equals(email, myUser.email)
-                && Objects.equals(address, myUser.address)
-                && Objects.equals(username, myUser.username)
-                && Objects.equals(password, myUser.password)
-                && Objects.equals(passwordConfirm, myUser.passwordConfirm)
-                && Objects.equals(roles, myUser.roles);
+        User user = (User) o;
+        return id.equals(user.id)
+                && Objects.equals(name, user.name)
+                && Objects.equals(email, user.email)
+                && Objects.equals(address, user.address)
+                && Objects.equals(username, user.username)
+                && Objects.equals(password, user.password)
+                && Objects.equals(passwordConfirm, user.passwordConfirm)
+                && Objects.equals(roles, user.roles);
     }
 
     @Override

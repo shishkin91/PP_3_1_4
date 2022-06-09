@@ -7,81 +7,81 @@ import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import ru.kata.spring.boot_security.demo.model.MyUser;
+import ru.kata.spring.boot_security.demo.model.User;
 import ru.kata.spring.boot_security.demo.service.UserServiceImp;
 
 import java.security.Principal;
 
 @Controller
-public class UsersController {
+public class AdminUserController {
     @Autowired
     private final UserServiceImp userServiceImp;
 
-    public UsersController(UserServiceImp userServiceImp) {
+    public AdminUserController(UserServiceImp userServiceImp) {
         this.userServiceImp = userServiceImp;
     }
 
     @GetMapping("/admin/add-user")
-    public String showSignUpForm(MyUser myUser) {
+    public String showSignUpForm(User user) {
         return "add-user";
     }
 
     @PostMapping("/admin/add-user")
-    public String addUser(@Validated MyUser myUser, BindingResult result, Model model) {
+    public String addUser(@Validated User user, BindingResult result, Model model) {
         if (result.hasErrors()) {
             return "add-user";
         }
 
-        userServiceImp.saveUser(myUser);
+        userServiceImp.saveUser(user);
         return "redirect:/admin";
     }
 
     @GetMapping("/admin")
     public String showUserList(Model model) {
-        model.addAttribute("myUsers", userServiceImp.allUsers());
+        model.addAttribute("users", userServiceImp.allUsers());
         return "admin";
     }
 
     @GetMapping("admin/edit/{id}")
     public String showUpdateForm(@PathVariable("id") long userId, Model model) {
-        MyUser myUser = null;
+        User user = null;
         try {
-            myUser = userServiceImp.findUserById(userId);
+            user = userServiceImp.findUserById(userId);
         } catch (IllegalArgumentException e) {
-            System.out.println("Invalid myUser Id:" + userId);
+            System.out.println("Invalid user Id:" + userId);
         }
 
-        model.addAttribute("myUser", myUser);
+        model.addAttribute("user", user);
         return "update-user";
     }
 
     @PostMapping("/admin/update/{id}")
-    public String updateUser(@PathVariable("id") long id, @Validated MyUser myUser,
+    public String updateUser(@PathVariable("id") long id, @Validated User user,
                              BindingResult result, Model model) {
         if (result.hasErrors()) {
-            myUser.setId(id);
+            user.setId(id);
             return "update-user";
         }
 
-        userServiceImp.saveUser(myUser);
+        userServiceImp.saveUser(user);
         return "redirect:/admin";
     }
 
     @GetMapping("/admin/delete/{id}")
     public String deleteUser(@PathVariable("id") long userId, Model model) {
-        MyUser myUser = null;
+        User user = null;
         try {
-            myUser = userServiceImp.findUserById(userId);
+            user = userServiceImp.findUserById(userId);
         } catch (IllegalArgumentException e) {
-            System.out.println("Invalid myUser Id:" + userId);
+            System.out.println("Invalid user Id:" + userId);
         }
-        userServiceImp.deleteUser(myUser.getId());
+        userServiceImp.deleteUser(user.getId());
         return "redirect:/admin";
     }
 
     @GetMapping(value = "/user")
     public String userPage(ModelMap modelMap, Principal principal) {
-        modelMap.addAttribute("myUser", userServiceImp.findByUsername(principal.getName()));
+        modelMap.addAttribute("user", userServiceImp.findByUsername(principal.getName()));
         return "user";
     }
 
