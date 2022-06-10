@@ -9,6 +9,10 @@ import java.util.Set;
 @Table(name = "t_role")
 public class Role implements GrantedAuthority {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", nullable = false)
+//    @Basic(optional = false)
+//    @Column(name = "id",unique=true, nullable = false)
     private Long id;
     private String name;
     @Transient
@@ -23,6 +27,9 @@ public class Role implements GrantedAuthority {
 
     public Role(Long id, String name) {
         this.id = id;
+        this.name = name;
+    }
+    public Role(String name) {
         this.name = name;
     }
 

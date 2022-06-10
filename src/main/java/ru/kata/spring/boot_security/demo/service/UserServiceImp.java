@@ -1,5 +1,6 @@
 package ru.kata.spring.boot_security.demo.service;
 
+import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -11,9 +12,7 @@ import ru.kata.spring.boot_security.demo.model.Role;
 import ru.kata.spring.boot_security.demo.repository.RoleRepository;
 import ru.kata.spring.boot_security.demo.repository.UserRepository;
 
-import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class UserServiceImp implements UserService {
@@ -44,11 +43,14 @@ public class UserServiceImp implements UserService {
         return userRepository.findAll();
     }
 
-    public User saveUser(User user) {
-        user.setRoles(Collections.singleton(new Role(2L, "ROLE_USER")));
+    public User saveUser(User user, String[] roles) {
+        Set<Role> roleSet = roleToStringArray(roles);
+        roleRepository.saveAll(roleSet);
+        user.setRoles(roleSet);
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         return userRepository.save(user);
     }
+
 
     @Transactional
     public boolean deleteUser(Long userId) {
@@ -65,13 +67,26 @@ public class UserServiceImp implements UserService {
     }
 
     @Override
+    public void saveAndFlush(User user) {
+        userRepository.saveAndFlush(user);
+    }
+
+    @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         User user = userRepository.findByEmail(email);
 
         if (user == null) {
             throw new UsernameNotFoundException("User not found");
         }
-
         return user;
+    }
+
+    public Set<Role> roleToStringArray(String[] roles) {
+        Set<Role> roleArray = new HashSet<>();
+        for (String role : roles) {
+
+            roleArray.add(new Role(role));
+        }
+        return roleArray;
     }
 }

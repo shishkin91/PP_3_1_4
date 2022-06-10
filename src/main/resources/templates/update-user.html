@@ -31,16 +31,25 @@
     <input type="text" th:field="*{password}" id="password" placeholder="Password">
     <span th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></span>
     <br><br>
-    <div class="form-group">
-        <label for="roles">roles</label>
-        <select multiple class="form-control" id="roles">
-            <option>ADMIN</option>
-            <option>USER</option>
+    <label>
+        <select size="3" name="role" id="roles" multiple="multiple">
+            <option disabled>Roles:</option>
+            <option value="ROLE_ADMIN">ADMIN</option>
+            <option selected value="ROLE_USER">USER</option>
         </select>
-    </div>
-    <label for="roles">roles</label>
-    <input type="text" th:field="*{roles}" id="roles" placeholder="role">
-    <span th:if="${#fields.hasErrors('roles')}" th:errors="*{roles}"></span>
+    </label>
+    <br><br>
+<!--    <div class="form-group">-->
+<!--        <label for="roles">roles</label>-->
+<!--        <select multiple class="form-control" id="roles">-->
+<!--            <option>ADMIN</option>-->
+<!--            <option>USER</option>-->
+<!--        </select>-->
+<!--    </div>-->
+
+<!--    <label for="roles">roles</label>-->
+<!--    <input type="text" th:field="*{roles}" id="roles" placeholder="role">-->
+<!--    <span th:if="${#fields.hasErrors('roles')}" th:errors="*{roles}"></span>-->
 
     <input type="submit" value="Update User">
 </form>
