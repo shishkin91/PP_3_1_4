@@ -50,8 +50,9 @@ public class AdminUserController {
     }
 
     @GetMapping("/admin")
-    public String showUserList(Model model) {
+    public String showUserList(Model model/*, ModelMap modelMap, Principal principal*/) {
         model.addAttribute("users", userServiceImp.allUsers());
+        /*modelMap.addAttribute("user", userServiceImp.findByUsername(principal.getName()));*/
         return "admin";
     }
 //    ///////////////////////////////////////////////////////
@@ -78,31 +79,6 @@ public class AdminUserController {
         return "redirect:/admin";
     }
 
-//    @GetMapping("admin/edit/{id}")
-//    public String showUpdateForm(@PathVariable("id") long userId, Model model) {
-//        User user = null;
-//        try {
-//            user = userServiceImp.findUserById(userId);
-//        } catch (IllegalArgumentException e) {
-//            System.out.println("Invalid user Id:" + userId);
-//        }
-//
-//        model.addAttribute("user", user);
-//        model.addAttribute("roles", user.getAuthorities());
-//        return "update-user";
-//    }
-//
-//    @PostMapping("/admin/update/{id}")
-//    public String updateUser(@PathVariable("id") long id, @Validated User user,
-//                             BindingResult result, Model model) {
-//        if (result.hasErrors()) {
-//            user.setId(id);
-//            return "update-user";
-//        }
-//
-//        userServiceImp.saveUser(user);
-//        return "redirect:/admin";
-//    }
 
     @GetMapping("/admin/delete/{id}")
     public String deleteUser(@PathVariable("id") long userId, Model model) {

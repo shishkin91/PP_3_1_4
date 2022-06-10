@@ -9,13 +9,13 @@ public class LoginController {
     // Login form
     @GetMapping("/")
     public String login() {
-        return "login.html";
+        return "login";
     }
 
     // Login form with error
     @GetMapping("/login-error.html")
     public String loginError(Model model) {
         model.addAttribute("loginError", true);
-        return "login.html";
+        return "login";
     }
 }

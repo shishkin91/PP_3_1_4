@@ -1,34 +1,132 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-<div th:switch="${users}">
-    <h2 th:case="null">No users yet!</h2>
-    <div th:case="*">
-        <h2>Users</h2>
-        <table>
-            <thead>
-            <tr>
-                <th>Name</th>
-                <th>Email</th>
-                <th>Address</th>
-                <th>Roles</th>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
-            </tr>
-            </thead>
-            <tbody>
-            <tr th:each="user : ${users}">
-                <td th:text="${user.name}"></td>
-                <td th:text="${user.email}"></td>
-                <td th:text="${user.address}"></td>
-                <td th:text="${user.getAuthorities()}"></td>
-                <td><a th:href="@{/admin/edit/{id}(id=${user.id})}">Edit</a></td>
-                <td><a th:href="@{/admin/delete/{id}(id=${user.id})}">Delete</a></td>
-            </tr>
-            </tbody>
-        </table>
+    <title>admin</title>
+</head>
+<body style="background-color: #f8f9fa">
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-9">
+<!--            <div>-->
+<!--                <table>-->
+<!--                    <tbody>-->
+<!--                    <tr>-->
+<!--                        <a style="color: black;text-align: left;">-->
+<!--                            <strong>-->
+<!--                                <th:block th:text="${user.getEmail()}"></th:block>-->
+<!--                            </strong>-->
+<!--                            <th:block th:text="'with roles: '+ ${user.getAuthorities()}"></th:block>-->
+<!--                        </a>-->
+<!--                        <ul class="navbar-nav ml-md-auto">-->
+<!--                            <li class="nav-item active">-->
+<!--                                <a class="nav-link" href="/logout">Logout <span class="sr-only">(current)</span></a>-->
+<!--                            </li>-->
+<!--                        </ul>-->
+<!--                    </tr>-->
+<!--                    </tbody>-->
+<!--                </table>-->
+<!--            </div>-->
+            <div class="row">
+                <div class="col-8 col-sm-6">
+                    <h2>Admin panel</h2>
+                </div>
+                <div class="col-4 col-sm-6">
+                    Level 2: .col-4 .col-sm-6
+                </div>
+            </div>
+        </div>
     </div>
-    <p><a href="/admin/add-user">Add a new user</a></p>
 </div>
-<br>
-<a href="#" th:href="@{/logout}">log Out</a>
 
+<ul class="nav flex-column">
+    <li class="nav-item">
+        <a class="nav-link active" href="#">Admin</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="#">User</a>
+    </li>
+</ul>
+<ul class="nav nav-tabs">
+    <li class="nav-item">
+        <a class="nav-link active" href="#">Users table</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="/admin/add-user">New User</a>
+    </li>
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Address</th>
+            <th>Roles</th>
+            <th></th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="user : ${users}">
+            <td th:text="${user.id}"></td>
+            <td th:text="${user.name}"></td>
+            <td th:text="${user.email}"></td>
+            <td th:text="${user.address}"></td>
+            <td th:text="${user.getAuthorities()}"></td>
+            <td><a th:href="@{/admin/edit/{id}(id=${user.id})}">Edit</a></td>
+            <td><a th:href="@{/admin/delete/{id}(id=${user.id})}">Delete</a></td>
+        </tr>
+        </tbody>
+    </table>
+
+    <div th:switch="${users}">
+        <h2 th:case="null">No users yet!</h2>
+        <div th:case="*">
+            <h2>Users</h2>
+            <table>
+                <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Address</th>
+                    <th>Roles</th>
+
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="user : ${users}">
+                    <td th:text="${user.name}"></td>
+                    <td th:text="${user.email}"></td>
+                    <td th:text="${user.address}"></td>
+                    <td th:text="${user.getAuthorities()}"></td>
+                    <td><a th:href="@{/admin/edit/{id}(id=${user.id})}">Edit</a></td>
+                    <td><a th:href="@{/admin/delete/{id}(id=${user.id})}">Delete</a></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <p><a href="/admin/add-user">Add a new user</a></p>
+    </div>
+    <br>
+    <a href="#" th:href="@{/logout}">log Out</a>
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+            integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+            crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+            integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+            crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+            integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+            crossorigin="anonymous"></script>
 </body>
 </html>
