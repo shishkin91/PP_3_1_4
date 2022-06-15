@@ -1,5 +1,6 @@
 package ru.kata.spring.boot_security.demo.model;
 
+import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -8,92 +9,39 @@ import java.util.Collection;
 import java.util.Objects;
 import java.util.Set;
 
+@NoArgsConstructor
+@Data
+@AllArgsConstructor
 @Entity
 @Table(name = "users")
 public class User implements UserDetails {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", nullable = false)
     private Long id;
     private String name;
-    private String email;
-    private String address;
-    private String username;
     private String password;
-    @Transient
-    private String passwordConfirm;
+    private String email;
+    private int age;
+
     @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "users_roles",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles;
-
-    public User(Long id, String name, String email, String address, Set<Role> roles) {
-        this.id = id;
-        this.name = name;
-        this.email = email;
-        this.address = address;
-        this.roles = roles;
-    }
-
-    public User() {
-
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
-    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return getRoles();
-    }
-
-    @Override
-    public String getPassword() {
-        return password;
-    }
-
-    public String getPasswordConfirm() {
-        return passwordConfirm;
-    }
-
-    public void setPasswordConfirm(String passwordConfirm) {
-        this.passwordConfirm = passwordConfirm;
+        return roles;
     }
 
     @Override
     public String getUsername() {
-        return username;
+        return email;
+    }
+
+    public String getName() {
+        return name;
     }
 
     @Override
@@ -116,8 +64,17 @@ public class User implements UserDetails {
         return true;
     }
 
-    public Set<Role> getRoles() {
-        return roles;
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        User user = (User) o;
+        return id.equals(user.id) && email.equals(user.email);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, email);
     }
 
     public void setRoles(Set<Role> roles) {
@@ -129,31 +86,10 @@ public class User implements UserDetails {
         return "User{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
-                ", email='" + email + '\'' +
-                ", address='" + address + '\'' +
-                ", username='" + username + '\'' +
                 ", password='" + password + '\'' +
+                ", email='" + email + '\'' +
+                ", age=" + age +
                 ", roles=" + roles +
                 '}';
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        User user = (User) o;
-        return id.equals(user.id)
-                && Objects.equals(name, user.name)
-                && Objects.equals(email, user.email)
-                && Objects.equals(address, user.address)
-                && Objects.equals(username, user.username)
-                && Objects.equals(password, user.password)
-                && Objects.equals(passwordConfirm, user.passwordConfirm)
-                && Objects.equals(roles, user.roles);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, name, email, address, username, password, passwordConfirm, roles);
     }
 }
