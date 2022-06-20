@@ -1,28 +1,32 @@
 package ru.kata.spring.boot_security.demo.configs;
 
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Lazy;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import ru.kata.spring.boot_security.demo.service.UserServiceImp;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import ru.kata.spring.boot_security.demo.service.UserService;
+
 
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
-    public final UserServiceImp userServiceImp;
-    public final SuccessUserHandler successUserHandler;
+    private final UserService userService;
+    private final PasswordEncoder passwordEncoder;
+    private final SuccessUserHandler successUserHandler;
 
-    public WebSecurityConfig(@Lazy UserServiceImp userServiceImp, SuccessUserHandler successUserHandler) {
-        this.userServiceImp = userServiceImp;
+    public WebSecurityConfig(@Qualifier("userServiceImp") UserService userService, PasswordEncoder passwordEncoder, SuccessUserHandler successUserHandler) {
+        this.userService = userService;
+        this.passwordEncoder = passwordEncoder;
         this.successUserHandler = successUserHandler;
     }
 
-    @Override
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(userServiceImp);
+    @Autowired
+    public void configureGlobalSecurity(AuthenticationManagerBuilder auth) throws Exception {
+        auth.userDetailsService(userService)
+                .passwordEncoder(passwordEncoder);
     }
 
     @Override
@@ -34,17 +38,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/").permitAll()
                 .and()
                 .formLogin()
-                .loginPage("/login")
-                .loginProcessingUrl("/login")
+                .successHandler(successUserHandler)
+                .loginProcessingUrl("/")
                 .usernameParameter("email")
                 .passwordParameter("password")
-                .successHandler(successUserHandler)
                 .and()
                 .logout();
-    }
-
-    @Bean
-    public BCryptPasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
     }
 }

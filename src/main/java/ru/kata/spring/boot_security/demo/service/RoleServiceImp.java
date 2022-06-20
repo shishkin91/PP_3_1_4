@@ -15,6 +15,7 @@ public class RoleServiceImp implements RoleService {
 
     private final RoleRepository roleRepository;
 
+
     public RoleServiceImp(RoleRepository roleRepository) {
         this.roleRepository = roleRepository;
     }
@@ -29,5 +30,6 @@ public class RoleServiceImp implements RoleService {
         Optional<Role> roleFromDb = roleRepository.findById(roleId);
         return roleFromDb.orElse(new Role());
     }
+
 
 }

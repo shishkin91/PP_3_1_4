@@ -19,10 +19,10 @@
 <body>
 <nav class="navbar bg-dark">
     <span class="text-white ">
-            <p class="font-weight-bold d-inline-block my-sm-1 " th:text="${user.getEmail()}">Authorized User Email</p>
+            <p class="font-weight-bold d-inline-block my-sm-1 " th:text="${userAuthorized.getEmail()}">Authorized User Email</p>
             <p class="list-inline-item my-sm-1">with roles: <li class="bd-highlight list-inline-item my-sm-1"
-                                                                th:each="role:${user.getRoles()}"
-                                                                th:text="${role.getRoleName().substring(5)}">Authorized User List Roles</li>
+                                                                th:each="role:${userAuthorized.getRoles()}"
+                                                                th:text="${role.getName().substring(5)}">Authorized User List Roles</li>
         </p>
     </span>
     <ul class="nav justify-content-end bg-dark">
@@ -63,12 +63,12 @@
                                 </thead>
                                 <tbody>
                                 <tr>
-                                    <td th:text="${user.id}"></td>
-                                    <td th:text="${user.getName}"></td>
-                                    <td th:text="${user.email}"></td>
-                                    <td th:text="${user.age}"></td>
-                                    <td class="d-inline-flex" th:each="role:${user.roles}"
-                                        th:text="${role.getRoleName().substring(5)}"></td>
+                                    <td th:text="${userAuthorized.id}"></td>
+                                    <td th:text="${userAuthorized.getName}"></td>
+                                    <td th:text="${userAuthorized.email}"></td>
+                                    <td th:text="${userAuthorized.age}"></td>
+                                    <td class="d-inline-flex" th:each="role:${userAuthorized.roles}"
+                                        th:text="${role.getName().substring(5)}"></td>
                                     <td>
                                 </tr>
                                 </tbody>
