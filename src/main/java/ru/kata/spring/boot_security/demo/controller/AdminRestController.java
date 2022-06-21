@@ -1,5 +1,7 @@
 package ru.kata.spring.boot_security.demo.controller;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.kata.spring.boot_security.demo.model.User;
 import ru.kata.spring.boot_security.demo.service.UserService;
@@ -17,27 +19,28 @@ public class AdminRestController {
     }
 
     @GetMapping("/users")
-    public List<User> getAllUsers() {
-        return userService.allUser();
+    public ResponseEntity<List<User>> getAllUsers() {
+        return ResponseEntity.ok(userService.allUser());
     }
 
     @GetMapping("users/{id}")
-    public User getUserById(@PathVariable long id) {
-        return userService.getUserById(id);
+    public ResponseEntity<User> getUserById(@PathVariable long id) {
+        return ResponseEntity.ok(userService.getUserById(id));
     }
 
     @PostMapping("/users")
-    public User addUser(@RequestBody User user) {
-        return userService.createOrUpdate(user);
+    public ResponseEntity<User> addUser(@RequestBody User user) {
+        return new ResponseEntity<>(userService.createOrUpdate(user), HttpStatus.OK);
     }
 
     @PutMapping("/users")
-    public User updateUser(@RequestBody User user) {
-        return userService.createOrUpdate(user);
+    public ResponseEntity<User> updateUser(@RequestBody User user) {
+        return new ResponseEntity<>(userService.createOrUpdate(user), HttpStatus.OK);
     }
 
     @DeleteMapping("/users/{id}")
-    public void deleteUser(@PathVariable long id) {
+    public ResponseEntity<?> deleteUser(@PathVariable long id) {
         userService.removeUserById(id);
+        return ResponseEntity.noContent().build();
     }
 }
